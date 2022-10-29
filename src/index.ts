@@ -16,7 +16,6 @@ const urlRedirect = (url: string): Response => new Response(null,  { status: 302
 
 
 const filters = [
-	"funkey",
 	"misc",
 	"nolive",
 	"noshorts",
@@ -33,8 +32,9 @@ const userscriptBase = "https://raw.githubusercontent.com/mchangrh/yt-neuter/mai
 const help = `
 This is the root of the yt-neuter redirect
 GitHub: https://github.com/mchangrh/yt-neuter
-filter lists: ${JSON.stringify(filters)}
-userscripts: ${JSON.stringify(userscripts)}
+Base Filter: /filter
+Filter Lists: ${JSON.stringify(filters)}
+Userscripts: ${JSON.stringify(userscripts)}
 
 /reflow customization:
   - /reflow/# will give you a script that will give you # videos per row
@@ -44,7 +44,7 @@ const handleURL = async (pathname: string) => {
 	const pathSplit = pathname.split("/")
 	if (pathname === "/") return new Response(help, { status: 200 })
 	const filterName = pathSplit?.[1] ?? ''
-	if (!filterName?.length) return urlRedirect(defaultFilter)
+	if (filterName === "filter") return urlRedirect(defaultFilter)
 	if (filters.includes(filterName)) return urlRedirect(filterBase + filterName + ".txt")
 	// filtering for reflow
 	if (filterName == "reflow") {
@@ -54,5 +54,5 @@ const handleURL = async (pathname: string) => {
 		return new Response(newFile, { headers: { 'Content-Type': 'text/javascript' }})
 	}
 	else if (userscripts.includes(filterName)) return urlRedirect(userscriptBase + filterName + ".user.js")
-	else return urlRedirect(defaultFilter)
+	else return new Response(help, { status: 200 })
   }
