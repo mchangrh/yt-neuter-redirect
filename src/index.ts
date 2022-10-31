@@ -28,10 +28,11 @@ const userscripts = [
 const defaultFilter = "https://raw.githubusercontent.com/mchangrh/yt-neuter/main/yt-neuter.txt"
 const filterBase = "https://raw.githubusercontent.com/mchangrh/yt-neuter/main/filters/"
 const userscriptBase = "https://raw.githubusercontent.com/mchangrh/yt-neuter/main/userscripts/"
+const githubLink = "https://github.com/mchangrh/yt-neuter"
 
 const help = `
 This is the root of the yt-neuter redirect
-GitHub: https://github.com/mchangrh/yt-neuter
+GitHub: ${githubLink}
 Base Filter: /filter
 Filter Lists: ${JSON.stringify(filters)}
 Userscripts: ${JSON.stringify(userscripts)}
@@ -44,11 +45,12 @@ const handleURL = async (pathname: string) => {
 	const pathSplit = pathname.split("/")
 	if (pathname === "/") return new Response(help, { status: 200 })
 	const filterName = pathSplit?.[1] ?? ''
+	if (filterName === "github") return urlRedirect(githubLink)
 	if (filterName === "filter") return urlRedirect(defaultFilter)
 	if (filters.includes(filterName)) return urlRedirect(filterBase + filterName + ".txt")
 	// filtering for reflow
 	if (filterName == "reflow") {
-		const number = pathSplit?.[2] ?? 6;
+		const number = pathSplit?.[2] ?? 6
 		const base = await fetch(userscriptBase + "reflow.user.js").then(r => r.text())
 		const newFile = base.replace(/const vidPerRow = \d/, `const vidPerRow = ${number}`)
 		return new Response(newFile, { headers: { 'Content-Type': 'text/javascript' }})
