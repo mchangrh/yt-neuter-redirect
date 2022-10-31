@@ -43,14 +43,18 @@ ${userscripts.map(u => "\t" + shortenBase + "/script/" + u).join("\n")}
 	${shortenBase}/reflow/#/reflow.user.js
 	
 	returns customized script that will give you # videos per row
+	replace # with scale to get a script that scales the videos to fit the screen
 `
 
 async function handleReflow (number: string): Promise<Response> {
 	const base = await fetch(userscriptBase + "reflow.user.js").then(r => r.text())
 	const linkReplace = new RegExp(userscriptBase + "reflow.user.js", "g")
-	const newFile = base
-		.replace(/const vidPerRow = \d/, `const vidPerRow = ${number}`)
+	const newLink = base
 		.replace(linkReplace, shortenBase + `/reflow/${number}/reflow.user.js`)
+	const newFile = (number == "scale")
+		? newLink.replace(/const scale = false;/, "const scale = true;")
+		: newLink.replace(/const vidPerRow = \d/, `const vidPerRow = ${number}`)
+
 	return new Response(newFile, { headers: { 'Content-Type': 'text/javascript' }})
 }
 
