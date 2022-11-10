@@ -27,11 +27,14 @@ const defaultFilter = githubBase + "yt-neuter.txt"
 const filterBase = githubBase + "filters/"
 const userscriptBase = githubBase + "userscripts/"
 const githubLink = "https://github.com/mchangrh/yt-neuter"
+const docsLink = githubLink + "/blob/main/docs#readme"
 
 const help = `
 This is the root of the yt-neuter redirect
 GitHub:
 	${githubLink}
+Docs:
+	${docsLink}
 Base Filter:
 	${shortenBase}/filter
 Filter Lists:
