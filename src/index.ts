@@ -68,6 +68,8 @@ const handleURL = async (pathname: string) => {
 	const name = pathSplit?.[2] ?? ''
 	if (type === "github") {
 		return urlRedirect(githubLink)
+	} else if (type ==="docs") {
+		return urlRedirect(docsLink)
 	} else if (type === "filter") {
 		if (name === "") return urlRedirect(defaultFilter)
 		if (filters.includes(name)) return urlRedirect(filterBase + name + ".txt")
