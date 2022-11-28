@@ -1,0 +1,5 @@
+/github https://github.com/mchangrh/yt-neuter 301
+/docs https://github.com/mchangrh/yt-neuter/tree/main/docs#readme 301
+/filter https://raw.githubusercontent.com/mchangrh/yt-neuter/main/yt-neuter.txt 301
+/filter/* https://raw.githubusercontent.com/mchangrh/yt-neuter/main/filters/:splat.txt 301
+/script/* https://raw.githubusercontent.com/mchangrh/yt-neuter/main/userscripts/:splat.user.js
