@@ -1,17 +1,21 @@
 export interface Env {}
 
-export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		console.log(ctx)
-		const { pathname } = new URL(request.url)
-		return handleURL(pathname)
-	},
-};
+export const onRequest: PagesFunction<Env> = async (context) => {
+	const { pathname } = new URL(context.request.url)
+	const pathSplit = pathname.split("/")
+	const number = pathSplit?.[2] ?? ''
+	return handleReflow(number)
+}
+	
 
 const shortenBase = "https://neuter.mchang.xyz"
 const userscriptBase = "https://raw.githubusercontent.com/mchangrh/yt-neuter/main/userscripts/"
 
 async function handleReflow (number: string): Promise<Response> {
+	// validate number
+	if (!number || (number !== "scale" && isNaN(parseInt(number)))) {
+		return new Response("400 invalid scale", { status: 400 })
+	}
 	const base = await fetch(userscriptBase + "reflow.user.js").then(r => r.text())
 	const linkReplace = new RegExp(userscriptBase + "reflow.user.js", "g")
 	const newLink = base
@@ -21,13 +25,4 @@ async function handleReflow (number: string): Promise<Response> {
 		: newLink.replace(/const vidPerRow = \d/, `const vidPerRow = ${number}`)
 
 	return new Response(newFile, { headers: { 'Content-Type': 'text/javascript' }})
-}
-
-const handleURL = async (pathname: string) => {
-	const pathSplit = pathname.split("/")
-	const type = pathSplit?.[1] ?? ''
-	const name = pathSplit?.[2] ?? ''
-	if (type === "reflow") {
-		return handleReflow(name)
-	}
 }
