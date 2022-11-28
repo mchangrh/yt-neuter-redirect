@@ -2,6 +2,7 @@ export interface Env {}
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		console.log(ctx)
 		const { pathname } = new URL(request.url)
 		return handleURL(pathname)
 	},
