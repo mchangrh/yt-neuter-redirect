@@ -2,6 +2,7 @@
 <head>
     <title>yt-neuter</title>
     <meta name="color-scheme" content="light dark">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="assets/favicon.png">
 </head>
 <body>
@@ -35,11 +36,10 @@ Userscripts:
 <script src="assets/copy.js"></script>
 <script>
     function openReflow() {
-        const scale = document.getElementById("scale").value;
-        const copyText = "https://neuter.mchang.xyz/reflow/" + scale + "/reflow.user.js";
+        const scale = document.getElementById("scale").value
+        const copyText = "https://neuter.mchang.xyz/reflow/" + scale + "/reflow.user.js"
         window.open(copyText, "_blank")
     }
 </script>
 </body>
-
 </html>
