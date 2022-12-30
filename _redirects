@@ -3,3 +3,4 @@
 /filter https://raw.githubusercontent.com/mchangrh/yt-neuter/main/yt-neuter.txt 301
 /filter/* https://raw.githubusercontent.com/mchangrh/yt-neuter/main/filters/:splat.txt 301
 /script/* https://raw.githubusercontent.com/mchangrh/yt-neuter/main/userscripts/:splat.user.js 301
+/require/* https://raw.githubusercontent.com/mchangrh/yt-neuter/main/require/:splat 301
